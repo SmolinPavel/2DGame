@@ -31,7 +31,9 @@
             let paddleX = (canvas.width-paddleWidth)/2;
 
             let rightPressed = false;
+            let rightPressedWithShift = false;
             let leftPressed = false;
+            let leftPressedWithShift = false;
 
             const brickRowCount = 3;
             const brickColumnCount = 5;
@@ -144,9 +146,12 @@
 
                 if(rightPressed && paddleX < canvas.width-paddleWidth) {
                     paddleX += 7;
-                }
-                else if(leftPressed && paddleX > 0) {
+                } else if(leftPressed && paddleX > 0) {
                     paddleX -= 7;
+                } else if(rightPressedWithShift && paddleX < canvas.width-paddleWidth) {
+                    paddleX += 14;
+                } else if(leftPressedWithShift && paddleX > 0) {
+                    paddleX -= 14;
                 }
             }
 
@@ -168,19 +173,29 @@
 
             function keyDownHandler(e) {
                 if(e.keyCode === 39) {
-                    rightPressed = true;
+                    if (e.shiftKey) {
+                        rightPressedWithShift = true;
+                    } else {
+                        rightPressed = true;
+                    }
                 }
                 else if(e.keyCode === 37) {
-                    leftPressed = true;
+                    if (e.shiftKey) {
+                        leftPressedWithShift = true;
+                    } else {
+                        leftPressed = true;
+                    }
                 }
             }
 
             function keyUpHandler(e) {
                 if(e.keyCode === 39) {
                     rightPressed = false;
+                    rightPressedWithShift = false;
                 }
                 else if(e.keyCode === 37) {
                     leftPressed = false;
+                    leftPressedWithShift = false;
                 }
             }
 
